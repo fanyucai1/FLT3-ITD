@@ -1,6 +1,6 @@
 # FLT3-IDT数据分析
 
-1. 关于生信方面的最新综述文章：[Yuan D ,  He X ,  Han X , et al. Comprehensive review and evaluation of computational methods for identifying FLT3-internal tandem duplication in acute myeloid leukaemia[J]. Briefings in Bioinformatics, 2021.](https://academic.oup.com/bib/advance-article-abstract/doi/10.1093/bib/bbab099/6225087?redirectedFrom=fulltext)
+1 关于生信方面的最新综述文章：[Yuan D ,  He X ,  Han X , et al. Comprehensive review and evaluation of computational methods for identifying FLT3-internal tandem duplication in acute myeloid leukaemia[J]. Briefings in Bioinformatics, 2021.](https://academic.oup.com/bib/advance-article-abstract/doi/10.1093/bib/bbab099/6225087?redirectedFrom=fulltext)
 
 2. 关于FLT3-IDT变异的介绍：[Spencer D H ,  Abel H J ,  Lockwood C M , et al. Detection of FLT3 Internal Tandem Duplication in Targeted, Short-Read-Length, Next-Generation Sequencing Data[J]. The Journal of molecular diagnostics: JMD, 2012, 15(1).](https://www.sciencedirect.com/science/article/pii/S1525157812002590)
 
@@ -13,15 +13,15 @@
 6. python3 hg19_FLT3-ITD.py --help
 
 
-    usage: This script will find FLT3_IDT.
-    
-     [-h] -b BAM [-o OUTDIR] -n NAME [-d DRAGEN]
-    
-    optional arguments:
-      -h, --help            show this help message and exit
-      -b BAM, --bam BAM     bam file,require=True
-      -o OUTDIR, --outdir OUTDIR
-                            output directory
-      -n NAME, --name NAME  sample name,require=True
-      -d DRAGEN, --dragen DRAGEN
-                            dragen hg19 hash table
+        usage: This script will find FLT3_IDT.
+        
+         [-h] -b BAM [-o OUTDIR] -n NAME [-d DRAGEN]
+        
+        optional arguments:
+          -h, --help            show this help message and exit
+          -b BAM, --bam BAM     bam file(required)
+          -o OUTDIR, --outdir OUTDIR
+                                output directory
+          -n NAME, --name NAME  sample name(required)
+          -d DRAGEN, --dragen DRAGEN
+                                dragen hg19 hash table

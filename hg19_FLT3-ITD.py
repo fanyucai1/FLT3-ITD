@@ -8,9 +8,9 @@ import subprocess
 docker_name="fanyucai1/flt3_itd:latest" #https://hub.docker.com/r/fanyucai1/flt3_itd
 
 parser=argparse.ArgumentParser("This script will find FLT3_IDT.\n\n")
-parser.add_argument("-b","--bam",help="bam file,require=True",required=True)
+parser.add_argument("-b","--bam",help="bam file(required)",required=True)
 parser.add_argument("-o","--outdir",help="output directory",default=os.getcwd())
-parser.add_argument("-n","--name",help="sample name,require=True",required=True)
+parser.add_argument("-n","--name",help="sample name(required)",required=True)
 parser.add_argument("-d","--dragen",help="dragen hg19 hash table")
 args=parser.parse_args()
 
@@ -70,7 +70,7 @@ pindel_out=docker_run+'/software/python3/Python-v3.7.0/bin/python3 /software/pin
            %(args.name,args.name)
 subprocess.check_call(pindel_out,shell=True)
 subprocess.check_call('cp %s/pindel/*.pro.vcf %s/FLT3-ITD/%s.pindel.vcf'%(args.outdir,args.outdir,args.name),shell=True)
-subprocess.check_call('cd %s && rm -rf pindel FLT3_ITD_ext ScanITD'%(args.outdir),shell=True)
+subprocess.check_call('cd %s && rm -rf pindel FLT3_ITD_ext ScanITD insert_size_histogram.pdf insert_size_metrics.txt'%(args.outdir),shell=True)
 
 #dragen
 if args.dragen:
