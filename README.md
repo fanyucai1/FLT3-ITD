@@ -13,16 +13,15 @@
 6. python3 hg19_FLT3-ITD.py --help
 
 
-          usage: This script will find FLT3_IDT.
+    usage: This script will find FLT3_IDT.
     
-           [-h] -b BAM [-o OUTDIR] [-n NAME] -i INSERT
+     [-h] -b BAM [-o OUTDIR] -n NAME [-d DRAGEN]
     
-          optional arguments:
-            -h, --help            show this help message and exit
-            -b BAM, --bam BAM     bam file
-            -o OUTDIR, --outdir OUTDIR
-                                  output directory
-            -n NAME, --name NAME  sample name
-            -i INSERT, --insert INSERT
-                                  insert length
-
+    optional arguments:
+      -h, --help            show this help message and exit
+      -b BAM, --bam BAM     bam file,require=True
+      -o OUTDIR, --outdir OUTDIR
+                            output directory
+      -n NAME, --name NAME  sample name,require=True
+      -d DRAGEN, --dragen DRAGEN
+                            dragen hg19 hash table
