@@ -3,7 +3,9 @@ import argparse
 import subprocess
 
 #Email:yucai.fan@illumina.com
-#version:2021.09.01
+#2021.09.01
+#fix bug:2021.09.08 pindel insert length=max(read_length,mean_insert_length,median_insert_length)
+
 
 docker_name="fanyucai1/flt3_itd:latest" #https://hub.docker.com/r/fanyucai1/flt3_itd
 
@@ -25,8 +27,7 @@ subprocess.check_call('mkdir -p %s/FLT3_ITD_ext' % (args.outdir), shell=True)
 subprocess.check_call('mkdir -p %s/ScanITD' % (args.outdir), shell=True)
 subprocess.check_call('mkdir -p %s/FLT3-ITD'% (args.outdir), shell=True)
 
-docker_run=" docker run -ti -v %s:/Raw_data/ -v %s:/output/ %s "%(indir,args.outdir,docker_name)
-
+docker_run=" docker run -v %s:/Raw_data/ -v %s:/output/ %s "%(indir,args.outdir,docker_name)
 #ScanITD
 ScanITD=docker_run + "/software/python3/Python-v3.7.0/bin/python3 /software/ScanITD.py -i /Raw_data/%s -r /reference/hg19.fa  " \
          "-f 0.02 -l 3 -t /reference/FLT3.bed -o /output/ScanITD/%s "%(file_name,args.name)
@@ -50,13 +51,16 @@ for line in infile:
     if line.startswith("MEDIAN_INSERT_SIZE"):
         k=num
     if k!=0 and num==(k+1):
-        size=array[0]
+        size=max(int(float(array[0])),int(float(array[1])),int(float(array[5])))
+        print(int(float(array[0])),int(float(array[1])),int(float(array[5])))
 infile.close()
-if size==0:
-    print("Inert length erro.")
-    exit()
-else:
-    print("Insert size length %s"%(size))
+
+samtools=docker_run+'samtools stats /Raw_data/%s|grep ^RL'%(file_name)
+a=subprocess.check_output(samtools,shell=True,stderr=subprocess.STDOUT)
+print("Read length %s"%(a.split()[1]))
+if size <int(a.split()[1]):
+    size=int(a.split()[1])
+print("Insert size length %s"%(size))
 subprocess.check_call("echo /Raw_data/%s\t%s\t%s >%s/pindel/pindel.config"%(file_name,size,args.name,args.outdir),shell=True)
 pindel=docker_run + '/software/pindel-master/pindel -f /reference/hg19.fa -i /output/pindel/pindel.config -c chr13 ' \
                         '-o /output/pindel/%s -j /reference/FLT3.bed '%(args.name)
